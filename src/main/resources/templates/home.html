@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>BookTrack</title>
+</head>
+<body>
+
+
+
+<div id="contents">
+
+
+    <h3>BookTrack Home Page</h3>
+
+    <p> Wana track some books?</p>
+
+    <input v-model="query">
+    <button v-on:click="getBooks">Search</button>
+
+    <ul>
+        <li style="list-style-type:none" v-for="book in books">
+            <book-card
+                    v-bind:book="book"
+                    v-bind:key="book.id">
+            </book-card>
+        </li>
+    </ul>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.21.1/babel.min.js"></script>
+<script src="js/app.js"></script>
+</body>
+
+
+</html>
