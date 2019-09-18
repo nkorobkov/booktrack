@@ -4,22 +4,20 @@ import booktrack.model.Book;
 import org.hibernate.query.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.boot.Metadata;
-import org.hibernate.boot.MetadataSources;
-import org.hibernate.boot.registry.StandardServiceRegistry;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class LibgenDBService {
 
-    private static StandardServiceRegistry registry;
-    private static SessionFactory sessionFactory;
+    private SessionFactory sessionFactory;
 
-    public LibgenDBService() {
-        sessionFactory = getSessionFactory();
+    @Autowired
+    public LibgenDBService(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
 
     }
 
@@ -36,9 +34,9 @@ public class LibgenDBService {
             Query<Book> books = session.createQuery(
                     "from Book book where pages is not null and book.title like :Que ", Book.class);
 
-            books.setParameter("Que", "%"+query+"%");
+            books.setParameter("Que", "% "+query+" %");
 
-            return books.list();
+            return books.stream().filter(x -> Integer.valueOf(x.getPages()) > 0).collect(Collectors.toList());
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -47,30 +45,5 @@ public class LibgenDBService {
     }
 
 
-    private static SessionFactory getSessionFactory() {
-        if (sessionFactory == null) {
-            try {
-                // Create registry
-                registry = new StandardServiceRegistryBuilder().configure().build();
-                // Create MetadataSources
-                MetadataSources sources = new MetadataSources(registry);
-                // Create Metadata
-                Metadata metadata = sources.getMetadataBuilder().build();
-                // Create SessionFactory
-                sessionFactory = metadata.getSessionFactoryBuilder().build();
-            } catch (Exception e) {
-                e.printStackTrace();
-                if (registry != null) {
-                    StandardServiceRegistryBuilder.destroy(registry);
-                }
-            }
-        }
-        return sessionFactory;
-    }
 
-    public static void shutdown() {
-        if (registry != null) {
-            StandardServiceRegistryBuilder.destroy(registry);
-        }
-    }
 }
