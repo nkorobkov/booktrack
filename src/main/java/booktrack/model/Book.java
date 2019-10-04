@@ -42,6 +42,7 @@ public class Book implements Serializable {
     private String series3;
     private String series4;
     private String title;
+    private String lowertitle;
     private String extension;
     private String version;
     private String filesize;

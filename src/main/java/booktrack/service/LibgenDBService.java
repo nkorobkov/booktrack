@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class LibgenDBService {
@@ -32,11 +31,11 @@ public class LibgenDBService {
     public List<Book> searchByName(String query) {
         try (Session session = sessionFactory.openSession()) {
             Query<Book> books = session.createQuery(
-                    "from Book book where pages is not null and book.title like :Que ", Book.class);
+                    "from Book book where pages is not null and book.lowertitle like :Que ", Book.class);
+            query = query.toLowerCase();
+            books.setParameter("Que", "% "+query+"%");
 
-            books.setParameter("Que", "% "+query+" %");
-
-            return books.stream().filter(x -> Integer.valueOf(x.getPages()) > 0).collect(Collectors.toList());
+            return books.list();
 
         } catch (Exception e) {
             e.printStackTrace();
