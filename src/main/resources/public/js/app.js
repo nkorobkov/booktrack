@@ -3,7 +3,7 @@ Vue.component('book-card', {
     template: `
         <div class="alert alert-secondary">
             <b class="book-title">
-                {{ book.title }}
+               <a v-bind:href="'/book/'+ book.id">{{ book.title }}</a> 
             </b><p> with {{book.pages}} pages</p><br>
             <p>{{book.desc}}</p>
         </div>`
