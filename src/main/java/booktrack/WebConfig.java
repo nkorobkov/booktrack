@@ -1,7 +1,9 @@
 package booktrack;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 
@@ -10,6 +12,9 @@ import java.util.Properties;
 
 @Configuration
 public class WebConfig {
+
+    @Autowired
+    private Environment env;
 
     @Bean
     public LocalSessionFactoryBean sessionFactory() {
@@ -24,10 +29,9 @@ public class WebConfig {
     public DataSource dataSource(){
         DriverManagerDataSource dataSource=new DriverManagerDataSource();
 
-        dataSource.setDriverClassName("org.postgresql.Driver");
-        dataSource.setUsername("postgres");
-        dataSource.setPassword("89036004646");
-        dataSource.setUrl("jdbc:postgresql://127.0.0.1:5432/libgenDB");
+        //won't work automaticaly for some reason
+
+        dataSource.setUrl(env.getProperty("SPRING_DATASOURCE_URL"));
 
         return dataSource;
     }
@@ -40,7 +44,7 @@ public class WebConfig {
         hibernateProperties.setProperty(
                 "hibernate.show_sql", "true");
         hibernateProperties.setProperty(
-                "hibernate.dialect", "org.hibernate.dialect.PostgresPlusDialect");
+                "hibernate.dialect", env.getProperty("SPRING_JPA_DATABASE_PLATFORM"));
         hibernateProperties.setProperty(
                 "hibernate.current_session_context_class", "thread");
         return hibernateProperties;
