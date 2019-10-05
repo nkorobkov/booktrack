@@ -32,6 +32,8 @@ public class WebConfig {
         //won't work automaticaly for some reason
 
         dataSource.setUrl(env.getProperty("SPRING_DATASOURCE_URL"));
+        dataSource.setPassword(env.getProperty("SPRING_DATASOURCE_PASSWORD"));
+        dataSource.setUsername(env.getProperty("SPRING_DATASOURCE_USERNAME"));
 
         return dataSource;
     }
