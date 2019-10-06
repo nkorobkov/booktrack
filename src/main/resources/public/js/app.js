@@ -4,8 +4,8 @@ Vue.component('book-card', {
         <div class="alert alert-secondary">
             <b class="book-title">
                <a v-bind:href="'/book/'+ book.id">{{ book.title }}</a> 
-            </b><p> with {{book.pages}} pages</p><br>
-            <p>{{book.desc}}</p>
+            </b><p> with {{book.pages}} pages</p>
+            <p  v-if="book.desr"><br>{{book.desc}}</p>
         </div>`
 });
 

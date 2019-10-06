@@ -17,7 +17,7 @@
 
     <div class="alert alert-warning" v-if="error">{{error}}</div>
 
-    <div class="input-group">
+    <div class="input-group" style="margin-bottom: 1rem">
         <input type="text" class="form-control" placeholder="Title to search" v-model="query">
         <div class="input-group-append">
             <button class="btn btn-outline-secondary" type="button"  v-on:click="getBooks" >Search</button>
