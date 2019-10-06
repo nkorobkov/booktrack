@@ -17,7 +17,7 @@ public class BookController {
 
 
     @RequestMapping("/searchByName")
-    public List<Book> NameSearch(@RequestParam(value="name", defaultValue="World") String name) {
+    public List<Book> nameSearch(@RequestParam(value="name", defaultValue="World") String name) {
         return libgenDBService.searchByName(name);
     }
 }
