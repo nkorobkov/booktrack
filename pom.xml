@@ -20,8 +20,25 @@
     <start-class>booktrack.Application</start-class>
   </properties>
 
+  <repositories>
+    <repository>
+      <id>spring-boot-throttling-repo</id>
+      <url>https://raw.github.com/weddini/spring-boot-throttling/mvn-repo/</url>
+      <snapshots>
+        <enabled>true</enabled>
+        <updatePolicy>always</updatePolicy>
+      </snapshots>
+    </repository>
+  </repositories>
+
 
   <dependencies>
+
+    <dependency>
+      <groupId>com.weddini.throttling</groupId>
+      <artifactId>spring-boot-throttling-starter</artifactId>
+      <version>0.0.9</version>
+    </dependency>
 
       <dependency>
         <groupId>org.projectlombok</groupId>
